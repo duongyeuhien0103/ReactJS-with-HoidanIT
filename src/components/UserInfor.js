@@ -21,7 +21,7 @@ class Infor extends React.Component {
                 }</button>
                 {myInfor.map(info => {
                     return (
-                        <React.Fragment>
+                        <React.Fragment key={info.id}>
                             <div>
                                 {this.state.isAdult && <div>
                                     My name is {info.name}
