@@ -1,65 +1,42 @@
 import React from "react";
-import logo from "./../logo.svg"
 class AddUserInfor extends React.Component {
-    state = {
-        isAdult: true
-    }
-    handleClick = () => {
+    state = { name: 'dương', age: 10, id: "" }
+    handleChangeName = (e) => {
         this.setState({
-            isAdult: !this.state.isAdult
+            name: e.target.value
+
         })
     }
-    handleAge = (e) => {
+    handleChangeAge = (e) => {
+        this.setState({
+            age: e.target.value
+        })
+    }
+    handleOnSubmit = (e) => {
+        e.preventDefault()
+        this.props.handleAddUser({
+            id: Math.floor(Math.random() * 100) + 1 + "random",
+            name: this.state.name,
+            age: Number(this.state.age),
+        })
+        // console.log(this.state)
 
     }
-    handleName = (e) => {
-        return e.target.value
-    }
-    handleOnSubmit = (event) => {
-        event.preventDefault()
-
-    }
-
-
     render() {
-
-        const { myInfor } = this.props
         return (
-            <React.Fragment>
-                <form type="submit" onSubmit={(event) => this.handleOnSubmit(event)}>
-                    <label>nick name: </label>
-                    <input type="text" placeholder="điền tên ik" onBlur={(e) => { this.handleName(e) }} ></input>
+            < React.Fragment>
+                <form type="submit" onSubmit={(e) => { this.handleOnSubmit(e) }}>
+                    <label>Nick name: </label>
+                    <input placeholder="Điền tên ik" type="text" value={this.state.name} onChange={(e) => { this.handleChangeName(e) }} />
                     <br />
-                    <label>Tuổi gì: </label>
-                    <input type="text" placeholder="điền tuổi ik" onChange={(e) => { this.handleAge(e) }} ></input>
+                    <label>Age: </label>
+                    <input placeholder="Điền tuổi ik" type={"text"} value={this.state.age} onChange={(e) => { this.handleChangeAge(e) }} />
                     <br />
-                    <button>Submit</button>
-                    <br />
-                    <button onClick={() => { this.handleClick() }}>{
-                        this.state.isAdult === true ? "Hide info" : "Show info"
-                    }</button>
-                    {myInfor.map(info => {
-                        return (
-                            <React.Fragment key={info.id}>
-                                <div>
-                                    {this.state.isAdult &&
-                                        <div>
-                                            My name is {info.name}
-                                            <br />
-                                            Im {info.age} years old
-                                            <hr />
-                                        </div>
-                                    }
-                                </div>
-                            </React.Fragment>
-                        )
-
-                    })}
+                    <button>Add user</button>
                 </form>
-                <img src={logo} />
             </React.Fragment>
+        )
 
-        );
     }
 }
 export default AddUserInfor
